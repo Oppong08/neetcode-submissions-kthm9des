@@ -1,0 +1,64 @@
+#key idea; An array of buckets stores linked list, and keys are assigned to buckets using a hashfunction(key % 10000).
+#each operation traverses only the linked list in the relevant bucket.
+#O(n/k) time and O(k+m)space complexity
+class ListNode:
+    def __init__(self,key):
+        self.key = key
+        self.next = None
+class MyHashSet:
+
+    def __init__(self):
+        self.set = [ListNode(0) for i in range(10**4)] 
+
+    def add(self, key: int) -> None:
+        index = key % len(self.set)
+        cur = self.set[index]
+
+        while  cur.next:
+            if cur.next.key == key:
+                return
+            cur = cur.next
+        cur.next = ListNode(key)
+       
+
+    def remove(self, key: int) -> None:
+        index = key % len(self.set)
+        cur = self.set[index]
+
+        while  cur.next:
+            if cur.next.key == key:
+                cur.next = cur.next.next
+                return 
+            cur = cur.next 
+            
+        
+    def contains(self, key: int) -> bool:
+        index = key % len(self.set)
+        cur = self.set[index]
+
+        while  cur.next:
+            if cur.next.key == key:
+                return True 
+            cur = cur.next
+        return False
+
+    # def __init__(self):
+       
+
+    # def add(self, key: int) -> None:
+    #     if key not in self.hashset:
+    #         self.hashset.append(key) 
+
+    # def remove(self, key: int) -> None:
+            
+    #     for k,v in enumerate(self.hashset):
+    #         if v == key:
+    #             self.hashset.pop(k)
+
+    # def contains(self, key: int) -> bool:
+    #     return (key in self.hashset)
+# Your MyHashSet object will be instantiated and called as such:
+# obj = MyHashSet()
+# obj.add(key)
+# obj.remove(key)
+# param_3 = obj.contains(key)
